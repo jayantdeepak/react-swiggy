@@ -11,18 +11,15 @@ const restlist=data.data.success.cards[4].gridWidget.gridElements.infoWithStyle.
 export default function Body(){
     let [restData,setrestdata]=useState(null)
     let [filter,setfilter]=useState(false)
+    let[search,setsearch]=useState("")
 
     useEffect(()=>{
        fetchdata()
        
     },[])
 
-
      const fetchdata=async()=>{
       setTimeout(()=>{setrestdata(restlist)},250)
-       
-        
-        
      }
      
 
@@ -36,9 +33,17 @@ export default function Body(){
         setfilter(false)
 
     }
+    function searchrest(){
+       
+      let searchlist= restData.filter((restaturant)=>restaturant.info.name.toLowerCase().includes(search.toLowerCase()))
+      console.log(searchlist)
+
+    }
     return(
       <div className='body'>
         <div className='serach'>
+            <input onChange={(e)=>{setsearch(e.target.value)}} value={search} type="text" placeholder="seach for resturant"/>
+            <button onClick={searchrest}>search</button>
           
           <button onClick={filtertoprest}>get top ratted restaturant</button>
           {filter=true? <button  onClick={seeallrest}>see all restaurant</button>:""}
