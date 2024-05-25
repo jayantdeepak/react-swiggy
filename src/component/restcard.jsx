@@ -10,7 +10,7 @@ export default function Restcard({details}){
       <h5>{cuisines.join(",")}</h5>
       <h3>{avgRating}</h3>
       
-      <h4>north indian, soutindian</h4>
+      
 
     </div>
   )
