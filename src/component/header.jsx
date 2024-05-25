@@ -1,4 +1,5 @@
 import { useState } from "react"
+import { NavLink } from "react-router-dom"
 
 export default function Header (){
 let[login,setlogin]=useState(false)
@@ -12,8 +13,9 @@ function logstatus(){
   <img src='https://img.freepik.com/premium-vector/chef-food-restaurant-logo_7085-179.jpg'/>
   </div>
   <div className='navigation-div'><ul>
-    <li>about us</li>
-    <li>contact us</li>
+    <li><NavLink to={"/"}>Home</NavLink></li>
+    <li><NavLink to={"/about"}>about us</NavLink></li>
+    <li><NavLink to={"/contact"}>contact us</NavLink></li>
     <li>cart</li>
     <button onClick={logstatus}>{login?"logout":"login"}</button>
     </ul>

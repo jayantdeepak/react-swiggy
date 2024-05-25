@@ -3,6 +3,7 @@ import { useEffect, useState } from "react"
 import Shimmerui from "./shimmerui"
 
 import data from "../utils/swigydata"
+import { Link } from "react-router-dom"
 
 const restlist=data.data.success.cards[4].gridWidget.gridElements.infoWithStyle.restaurants
 
@@ -58,8 +59,8 @@ export default function Body(){
          {restData
          ? 
          modlist.map(
-            (restaurant)=>(
-          <Restcard key={restaurant.info.id} details={restaurant}/>)
+            (restaurant)=>(<Link to={"rest/"+restaurant.info.id}>
+          <Restcard key={restaurant.info.id} details={restaurant}/></Link>)
         )
         :<>
         <Shimmerui/><Shimmerui/><Shimmerui/><Shimmerui/>
@@ -75,3 +76,4 @@ export default function Body(){
       </div>
     )
   }
+  

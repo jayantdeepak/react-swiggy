@@ -1,5 +1,5 @@
 import React from 'react'
-import ReactDOM from "react-dom"
+import ReactDOM from "react-dom/client"
 import Header from './component/header'
 import Restcard from './component/restcard'
 import Body from './component/body'
@@ -9,33 +9,34 @@ import Aboutus from './component/aboutus'
 import Contact from './component/Contact'
 import { RouterProvider } from 'react-router-dom'
 import { Outlet } from 'react-router-dom'
+import RestInfo from './component/RestInfo'
 
 const router=createBrowserRouter([
-  {
-    path:"/",
+  
+   { path:"/",
     element:<Applayout/>,
-   
-    children:[
+    children:
+    [
       {path:"/",
       element:<Body/>
-      
-
       },
       {
         path:"/about",
         element:<Aboutus/>
       },
-      {path:"/contact",
+      {
+        path:"/contact",
       element:<Contact/>
+      },
+      {
+        path:"/rest/:resid",
+        element:<RestInfo/>
 
       }
     ],
     errorElement:<Error/>,
-    }
-  
-
+  }
 ]
-
 )
 
 
