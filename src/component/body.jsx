@@ -12,47 +12,52 @@ export default function Body(){
     let [restData,setrestdata]=useState(null)
     let [filter,setfilter]=useState(false)
     let[search,setsearch]=useState("")
+    let[modlist,setmodlist]=useState([])
 
     useEffect(()=>{
-       fetchdata()
+       fetchData()
+       setmodlist(restlist)
        
     },[])
 
-     const fetchdata=async()=>{
+     const fetchData=async()=>{
       setTimeout(()=>{setrestdata(restlist)},250)
      }
      
 
-    function filtertoprest(){ 
+    function filterTopRest(){ 
         const fr=restData.filter((rest)=>rest.info.avgRating > 4 )
-        setrestdata(fr)
+        setTimeout(()=>{setmodlist(fr)},200)
+        
     console.log(fr)
     setfilter(true)}
 
-    function seeallrest(){setrestdata(restlist)
-        setfilter(false)
+    function seeAllRest(){
+        setTimeout(()=>{setmodlist(restlist)},200)
+        setfilter(false)}
 
-    }
-    function searchrest(){
+
+    function searchRest(){
        
       let searchlist= restData.filter((restaturant)=>restaturant.info.name.toLowerCase().includes(search.toLowerCase()))
       console.log(searchlist)
+      setTimeout(()=>{setmodlist(searchlist)},200)
 
     }
     return(
       <div className='body'>
         <div className='serach'>
             <input onChange={(e)=>{setsearch(e.target.value)}} value={search} type="text" placeholder="seach for resturant"/>
-            <button onClick={searchrest}>search</button>
+            <button onClick={searchRest}>search</button>
           
-          <button onClick={filtertoprest}>get top ratted restaturant</button>
-          {filter=true? <button  onClick={seeallrest}>see all restaurant</button>:""}
+          <button onClick={filterTopRest}>get top ratted restaturant</button>
+          {filter=true? <button  onClick={seeAllRest}>see all restaurant</button>:""}
           </div>
         <div className='res-container'>
 
          {restData
          ? 
-         restData.map(
+         modlist.map(
             (restaurant)=>(
           <Restcard key={restaurant.info.id} details={restaurant}/>)
         )
