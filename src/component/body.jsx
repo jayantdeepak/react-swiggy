@@ -1,9 +1,10 @@
 import Restcard from "./restcard"
-import { useEffect, useState } from "react"
+import { useContext, useEffect, useState } from "react"
 import Shimmerui from "./shimmerui"
-
+import usercontext from "../context/userContext"
 import data from "../utils/swigydata"
 import { Link } from "react-router-dom"
+// import usercontext from "../context/userContext"
 
 const restlist=data.data.success.cards[4].gridWidget.gridElements.infoWithStyle.restaurants
 
@@ -14,6 +15,9 @@ export default function Body(){
     let [filter,setfilter]=useState(false)
     let[search,setsearch]=useState("")
     let[modlist,setmodlist]=useState([])
+
+    let{setUser}=useContext(usercontext)
+   
 
     useEffect(()=>{
        fetchData()
@@ -43,8 +47,10 @@ export default function Body(){
       let searchlist= restData.filter((restaturant)=>restaturant.info.name.toLowerCase().includes(search.toLowerCase()))
       console.log(searchlist)
       setTimeout(()=>{setmodlist(searchlist)},200)
-
     }
+    // function handleclick(){
+    //   setUser()
+    // }
     return(
       <div className='body'>
         <div className='serach'>
@@ -54,13 +60,15 @@ export default function Body(){
           <button onClick={filterTopRest}>get top ratted restaturant</button>
           {filter=true? <button  onClick={seeAllRest}>see all restaurant</button>:""}
           </div>
+          <input type="text"  onChange={(e)=>{setUser(e.target.value)}} placeholder="usename"/>
+          
         <div className='res-container'>
 
          {restData
          ? 
          modlist.map(
             (restaurant)=>(<Link to={"rest/"+restaurant.info.id}>
-          <Restcard key={restaurant.info.id} details={restaurant}/></Link>)
+          <Restcard key={Number(restaurant.info.id)} details={restaurant}/></Link>)
         )
         :<>
         <Shimmerui/><Shimmerui/><Shimmerui/><Shimmerui/>

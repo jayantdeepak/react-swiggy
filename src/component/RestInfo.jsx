@@ -12,28 +12,27 @@ const RestInfo = () => {
     let restid=useParams()
     let str = String(restid.resid)
     let thisRest=restlist.filter((item)=>item.info.id == str)
-    console.log(thisRest)
-    useEffect(async()=>{
-      
-      let data=await fetch("https://www.swiggy.com/mapi/menu/pl?page-type=REGULAR_MENU&complete-menu=true&lat=22.71700&lng=75.83370&restaurantId="+thisRest[0].info.id)
-   let jsondata=await data.json()
-   console.log(jsondata)
-   
-      
-  },[])
     
-    useEffect(async()=>{
-        const data= await fetch("https://www.swiggy.com/mapi/menu/pl?page-type=REGULAR_MENU&complete-menu=true&lat=22.71700&lng=75.83370&restaurantId=174979")
-        const jsondata=  await data.json()
+    
+    
+    useEffect(() => {
+      async function fetchData() {
+          const response = await fetch(`https://www.swiggy.com/mapi/menu/pl?page-type=REGULAR_MENU&complete-menu=true&lat=22.71700&lng=75.83370&restaurantId=${thisRest[0].info.id}`);
+          const jsondata = await response.json();
 
-        let recomendation=jsondata.data.cards[5].groupedCard.cardGroupMap.REGULAR.cards[1].card.card.itemCards
-        // let str = restid.resid.toString()
-    // let thisRest=restlist.filter((item)=>item.info.id == str)
-    
-    // console.log(thisRest)
-    // console.log(recomendation)
-    setTimeout(()=>{setInfo(recomendation)},200)
-     },[])
+          let recommendation = jsondata.data.cards[5].groupedCard.cardGroupMap.REGULAR.cards[1].card.card.itemCards;
+          let timer = setTimeout(() => {
+              setInfo(recommendation);
+          }, 100);
+
+          // Cleanup function
+          return () => {
+              clearTimeout(timer);
+          };
+      }
+
+      fetchData();
+  }, [thisRest]);
     
 
    
